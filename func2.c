@@ -39,20 +39,20 @@ int print_pointer(va_list types, char buffer[],
 		length++;
 	}
 
-	if ((f & F_ZERO) && !(f & F_MINUS))
+	if ((flags & F_ZERO) && !(flags & F_MINUS))
 		padd = '0';
 
-	if (f & F_PLUS)
+	if (flags & F_PLUS)
 		extra_c = '+', length++;
 
-	else if (f & F_SPACE)
+	else if (flags & F_SPACE)
 		extra_c = ' ', length++;
 
 	ind++;
 
 	/*return (write(1, &buffer[i], BUFF_SIZE - i - 1));*/
 	return (write_pointer(buffer, ind, length,
-		w, f, padd, extra_c, padd_start));
+		width, flags, padd, extra_c, padd_start));
 }
 
 /************************* PRINT NON PRINTABLE *************************/
