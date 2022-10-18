@@ -13,12 +13,12 @@
  */
 
 int print_unsigned(va_list types, char buffer[],
-	int f, int w, int p, int s)
+	int flags, int width, int precision, int size)
 {
 	int i = BUFF_SIZE - 2;
 	unsigned long int num = va_arg(types, unsigned long int);
 
-	num = convert_size_unsgnd(num, s);
+	num = convert_size_unsgnd(num, size);
 
 	if (num == 0)
 		buffer[i--] = '0';
@@ -33,7 +33,7 @@ int print_unsigned(va_list types, char buffer[],
 
 	i++;
 
-	return (write_unsgnd(0, i, buffer, f, w, p, s));
+	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
 
 }
 
@@ -49,15 +49,15 @@ int print_unsigned(va_list types, char buffer[],
  */
 
 int print_octal(va_list types, char buffer[],
-	int f, int w, int p, int s)
+	int flags, int width, int precision, int size)
 {
 	int i = BUFF_SIZE - 2;
 	unsigned long int num = va_arg(types, unsigned long int);
 	unsigned long int init_num = num;
 
-	UNUSED(w);
+	UNUSED(width);
 
-	num = convert_size_unsgnd(num, s);
+	num = convert_size_unsgnd(num, size);
 
 	if (num == 0)
 		buffer[i--] = '0';
@@ -70,12 +70,12 @@ int print_octal(va_list types, char buffer[],
 		num /= 8;
 	}
 
-	if (f & F_HASH && init_num != 0)
+	if (flags & F_HASH && init_num != 0)
 
 		buffer[i--] = '0';
 	i++;
 
-	return (write_unsgnd(0, i, buffer, f, w, p, s));
+	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
 }
 
 /************** PRINT UNSIGNED NUMBER IN HEXADECIMAL **************/
@@ -91,10 +91,10 @@ int print_octal(va_list types, char buffer[],
  */
 
 int print_hexadecimal(va_list types, char buffer[],
-	int f, int w, int p, int s)
+	int flags, int width, int precision, int size)
 {
 	return (print_hexa(types, "0123456789abcdef", buffer,
-		f, 'x', w, p, s));
+		flags, 'x', width, precision, size));
 }
 
 /************* PRINT UNSIGNED NUMBER IN UPPER HEXADECIMAL **************/
@@ -110,10 +110,10 @@ int print_hexadecimal(va_list types, char buffer[],
  */
 
 int print_hexa_upper(va_list types, char buffer[],
-	int f, int w, int p, int s)
+	int flags, int width, int precision, int size)
 {
 	return (print_hexa(types, "0123456789ABCDEF", buffer,
-		f, 'X', w, p, s));
+		flags, 'X', width, precision, size));
 }
 
 /************** PRINT HEXX NUM IN LOWER OR UPPER **************/
@@ -133,15 +133,15 @@ int print_hexa_upper(va_list types, char buffer[],
 
 int print_hexa(va_list types, char map_to[], char buffer[],
 
-	int f, char flag_ch, int w, int p, int s)
+	int flags, char flag_ch, int width, int precision, int size)
 {
 	int i = BUFF_SIZE - 2;
 	unsigned long int num = va_arg(types, unsigned long int);
 	unsigned long int init_num = num;
 
-	UNUSED(w);
+	UNUSED(width);
 
-	num = convert_size_unsgnd(num, s);
+	num = convert_size_unsgnd(num, size);
 
 	if (num == 0)
 		buffer[i--] = '0';
@@ -153,12 +153,12 @@ int print_hexa(va_list types, char map_to[], char buffer[],
 		buffer[i--] = map_to[num % 16];
 		num /= 16;
 	}
-	if (f & F_HASH && init_num != 0)
+	if (flags & F_HASH && init_num != 0)
 	{
 		buffer[i--] = flag_ch;
 		buffer[i--] = '0';
 	}
 	i++;
 
-	return (write_unsgnd(0, i, buffer, f, w, p, s));
+	return (write_unsgnd(0, i, buffer, flags, width, precision, size));
 }
