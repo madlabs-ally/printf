@@ -13,7 +13,7 @@
  */
 
 int print_pointer(va_list types, char buffer[],
-	int f, int w, int p, int s)
+	int flags, int width, int precision, int size)
 {
 	char extra_c = 0, padd = ' ';
 	int ind = BUFF_SIZE - 2, length = 2, padd_start = 1; /* length=2, for '0x' */
@@ -21,14 +21,14 @@ int print_pointer(va_list types, char buffer[],
 	char map_to[] = "0123456789abcdef";
 	void *addrs = va_arg(types, void *);
 
-	UNUSED(w);
-	UNUSED(s);
+	UNUSED(width);
+	UNUSED(size);
 
 	if (addrs == NULL)
 		return (write(1, "(nil)", 5));
 
 	buffer[BUFF_SIZE - 1] = '\0';
-	UNUSED(p);
+	UNUSED(precision);
 
 	num_addrs = (unsigned long)addrs;
 
@@ -68,15 +68,15 @@ int print_pointer(va_list types, char buffer[],
  */
 
 int print_non_printable(va_list types, char buffer[],
-	int f, int w, int p, int s)
+	int flags, int width, int precision, int size)
 {
 	int i = 0, offset = 0;
 	char *str = va_arg(types, char *);
 
-	UNUSED(f);
-	UNUSED(w);
-	UNUSED(p);
-	UNUSED(s);
+	UNUSED(flags);
+	UNUSED(width);
+	UNUSED(precision);
+	UNUSED(size);
 
 	if (str == NULL)
 		return (write(1, "(null)", 6));
@@ -108,21 +108,21 @@ int print_non_printable(va_list types, char buffer[],
  */
 
 int print_reverse(va_list types, char buffer[],
-	int f, int w, int p, int s)
+	int flags, int width, int precision, int size)
 {
 	char *str;
 	int i, count = 0;
 
 	UNUSED(buffer);
-	UNUSED(f);
-	UNUSED(w);
-	UNUSED(s);
+	UNUSED(flags);
+	UNUSED(width);
+	UNUSED(size);
 
 	str = va_arg(types, char *);
 
 	if (str == NULL)
 	{
-		UNUSED(p);
+		UNUSED(precision);
 
 		str = ")Null(";
 	}
@@ -152,7 +152,7 @@ int print_reverse(va_list types, char buffer[],
  */
 
 int print_rot13string(va_list types, char buffer[],
-	int f, int w, int p, int s)
+	int flags, int width, int precision, int size)
 {
 	char x;
 	char *str;
@@ -163,10 +163,10 @@ int print_rot13string(va_list types, char buffer[],
 
 	str = va_arg(types, char *);
 	UNUSED(buffer);
-	UNUSED(f);
-	UNUSED(w);
-	UNUSED(p);
-	UNUSED(s);
+	UNUSED(flags);
+	UNUSED(width);
+	UNUSED(precision);
+	UNUSED(size);
 
 	if (str == NULL)
 		str = "(AHYY)";
